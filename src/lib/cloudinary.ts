@@ -79,11 +79,14 @@ export const replaceImage = async (
 export const getFolderImages = async (
     folderPath: string
 ): Promise<ImageAsset[]> => {
-    const result = await cloudinary.search
-        .expression(`folder:${folderPath}`)
-        .sort_by("public_id", "asc")
-        .max_results(500)
-        .execute();
+    // Using the Admin API (.api.resources) bypasses the 3-second search indexing delay,
+    // guaranteeing instantly consistent results right after an upload!
+    const result = await cloudinary.api.resources({
+        type: "upload",
+        prefix: folderPath + "/", // The trailing slash ensures we only get files IN this folder
+        max_results: 500,
+        direction: "asc" // Sort ascending
+    });
 
     return result.resources as ImageAsset[];
 };

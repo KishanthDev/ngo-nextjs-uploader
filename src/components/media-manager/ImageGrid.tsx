@@ -28,9 +28,9 @@ const ImageGrid: React.FC<ImageGridProps> = ({
     const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
     const [imageToDelete, setImageToDelete] = useState<ImageAsset | null>(null);
 
-    const handleUploadSuccess = () => {
+    const handleUploadSuccess = async () => {
         setIsUploadModalOpen(false);
-        refreshImages();
+        await refreshImages();
     };
 
     const handleReplaceClick = (image: ImageAsset) => {
@@ -38,10 +38,10 @@ const ImageGrid: React.FC<ImageGridProps> = ({
         setIsReplaceModalOpen(true);
     };
 
-    const handleReplaceSuccess = () => {
+    const handleReplaceSuccess = async () => {
         setIsReplaceModalOpen(false);
         setImageToReplace(null);
-        refreshImages();
+        await refreshImages();
     };
 
     const handleDeleteClick = (image: ImageAsset) => {
@@ -49,10 +49,10 @@ const ImageGrid: React.FC<ImageGridProps> = ({
         setIsDeleteDialogOpen(true);
     };
 
-    const handleDeleteConfirm = () => {
+    const handleDeleteConfirm = async () => {
         setIsDeleteDialogOpen(false);
         setImageToDelete(null);
-        refreshImages();
+        await refreshImages();
     };
 
     const canUploadMore =

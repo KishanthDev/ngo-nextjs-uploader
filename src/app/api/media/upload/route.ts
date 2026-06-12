@@ -62,17 +62,16 @@ export async function POST(req: NextRequest) {
             );
         }
 
-        const result = await handleImageUpload(
+        const results = await handleImageUpload(
             companyId,
             sectionId,
             files,
             currentImages
         );
 
-        return NextResponse.json(result, {
-            status: result.some((r) => !r.success)
-                ? 400
-                : 200,
+        return NextResponse.json({
+            success: results.every((r) => r.success),
+            results,
         });
     } catch (error: any) {
         console.error("Upload API Error:", error);
