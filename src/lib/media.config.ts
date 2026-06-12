@@ -1,3 +1,4 @@
+// Client-side media configuration utilities - provides functions to access media config for companies and sections
 import { MEDIA_CONFIG } from "@/config/media.config";
 import { Company, Section, SectionConfig } from "@/types/media";
 

@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import {
     getMediaAssets,
-    getSectionConfig,
     handleImageUpload,
 } from "@/lib/media.service";
+import { getSectionConfig } from "@/lib/media.config";
 
 export async function POST(req: NextRequest) {
     try {

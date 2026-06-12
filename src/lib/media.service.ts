@@ -1,11 +1,8 @@
-import { MEDIA_CONFIG } from "@/config/media.config";
+// Service layer for media management - handles business logic and interactions with Cloudinary
 import {
     ImageAsset,
-    Company,
-    Section,
     UploadResponse,
     DeleteResponse,
-    SectionConfig,
 } from "@/types/media";
 import {
     uploadImage,
@@ -14,31 +11,7 @@ import {
     getFolderImages,
 } from "./cloudinary";
 import { validateImageUpload } from "./validations";
-
-export const getCompanies = (): Company[] => {
-    return Object.keys(MEDIA_CONFIG).map((id) => ({
-        id,
-        name: MEDIA_CONFIG[id].displayName,
-    }));
-};
-
-export const getSectionsForCompany = (companyId: string): Section[] => {
-    const companyConfig = MEDIA_CONFIG[companyId];
-    if (!companyConfig) return [];
-
-    return Object.keys(companyConfig.sections).map((id) => ({
-        id,
-        name: id.replace(/_/g, " ").replace(/\b\w/g, (l) => l.toUpperCase()),
-        config: companyConfig.sections[id],
-    }));
-};
-
-export const getSectionConfig = (
-    companyId: string,
-    sectionId: string
-): SectionConfig | undefined => {
-    return MEDIA_CONFIG[companyId]?.sections[sectionId];
-};
+import { getSectionConfig } from "./media.config";
 
 export const getMediaAssets = async (
     companyId: string,
