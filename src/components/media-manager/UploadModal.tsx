@@ -60,7 +60,12 @@ const UploadModal: React.FC<UploadModalProps> = ({
             const data = await response.json();
 
             if (!response.ok || !data.success) {
-                throw new Error(data.message || "Upload failed.");
+                const errorMessage =
+                    data.results?.[0]?.message ||
+                    data.message ||
+                    "Upload failed.";
+
+                throw new Error(errorMessage);
             }
 
             let successCount = 0;

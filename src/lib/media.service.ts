@@ -44,10 +44,12 @@ export const handleImageUpload = async (
         sectionConfig
     );
 
-    const validationErrorResponses: UploadResponse[] = errors.map((error) => ({
-        success: false,
-        message: error,
-    }));
+    if (errors.length > 0) {
+        return errors.map((error) => ({
+            success: false,
+            message: error,
+        }));
+    }
 
     const uploadPromises = validFiles.map(async (file) => {
         try {
@@ -71,7 +73,7 @@ export const handleImageUpload = async (
         }
     });
 
-    return [...validationErrorResponses, ...(await Promise.all(uploadPromises))];
+    return await Promise.all(uploadPromises);
 };
 
 export const handleImageDelete = async (
