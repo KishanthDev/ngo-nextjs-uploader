@@ -4,6 +4,7 @@ import MediaPreview from "./MediaPreview";
 import UploadModal from "./UploadModal";
 import ReplaceModal from "./ReplaceModal";
 import DeleteDialog from "./DeleteDialog";
+import PreviewImageModal from "./PreviewImageModal";
 
 interface ImageGridProps {
     companyId: string;
@@ -27,6 +28,8 @@ const ImageGrid: React.FC<ImageGridProps> = ({
     const [imageToReplace, setImageToReplace] = useState<ImageAsset | null>(null);
     const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
     const [imageToDelete, setImageToDelete] = useState<ImageAsset | null>(null);
+    const [previewImage, setPreviewImage] = useState<ImageAsset | null>(null);
+    const [isPreviewOpen, setIsPreviewOpen] = useState(false);
 
     const handleUploadSuccess = async () => {
         setIsUploadModalOpen(false);
@@ -53,6 +56,11 @@ const ImageGrid: React.FC<ImageGridProps> = ({
         setIsDeleteDialogOpen(false);
         setImageToDelete(null);
         await refreshImages();
+    };
+
+    const handlePreviewClick = (image: ImageAsset) => {
+        setPreviewImage(image);
+        setIsPreviewOpen(true);
     };
 
     const canUploadMore =
@@ -101,6 +109,7 @@ const ImageGrid: React.FC<ImageGridProps> = ({
                         <MediaPreview
                             key={image.public_id}
                             image={image}
+                            onView={handlePreviewClick}
                             onReplace={sectionConfig.allowReplace ? handleReplaceClick : undefined}
                             onDelete={handleDeleteClick}
                         />
@@ -109,6 +118,7 @@ const ImageGrid: React.FC<ImageGridProps> = ({
             )}
 
             <UploadModal isOpen={isUploadModalOpen} onClose={() => setIsUploadModalOpen(false)} onSuccess={handleUploadSuccess} companyId={companyId} sectionId={sectionId} sectionConfig={sectionConfig} currentImages={images} />
+            <PreviewImageModal isOpen={isPreviewOpen} image={previewImage} onClose={() => { setIsPreviewOpen(false); setPreviewImage(null); }} />
             {imageToReplace && <ReplaceModal isOpen={isReplaceModalOpen} onClose={() => setIsReplaceModalOpen(false)} onSuccess={handleReplaceSuccess} oldImage={imageToReplace} />}
             {imageToDelete && <DeleteDialog isOpen={isDeleteDialogOpen} onClose={() => setIsDeleteDialogOpen(false)} onConfirm={handleDeleteConfirm} imagesToDelete={[imageToDelete]} />}
         </div>

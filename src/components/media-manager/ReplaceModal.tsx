@@ -70,9 +70,9 @@ const ReplaceModal: React.FC<ReplaceModalProps> = ({
     if (!isOpen) return null;
 
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div className="fixed inset-0 backdrop-blur-md bg-black/20 flex items-center justify-center z-50 p-4">
             <div className="bg-white p-6 rounded-lg shadow-xl w-full max-w-lg">
-                <h2 className="text-2xl font-bold mb-4">Replace Image</h2>
+                    <h2 className="text-2xl font-bold mb-4 text-gray-900">Replace Image</h2>
                 <p className="mb-4 text-sm text-gray-600">Replacing: <span className="font-medium text-gray-800">{oldImage.original_filename || oldImage.public_id}</span></p>
                 <input type="file" accept="image/*" onChange={handleFileChange} ref={fileInputRef} className="mb-4 w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-yellow-50 file:text-yellow-700 hover:file:bg-yellow-100" />
                 <div className="flex justify-end space-x-3">
