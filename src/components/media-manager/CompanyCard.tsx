@@ -15,12 +15,21 @@ const CompanyCard: React.FC<CompanyCardProps> = ({
     return (
         <button
             onClick={() => onSelect(company.id)}
-            className={`w-full text-left p-3 rounded-md transition-colors duration-200 ${isSelected
-                    ? "bg-blue-600 text-white"
-                    : "hover:bg-gray-700 text-gray-300"
-                }`}
+            className={`
+                relative w-full rounded-xl px-4 py-3 text-left
+                transition-all duration-200
+                ${
+                    isSelected
+                        ? "bg-blue-50 text-blue-700 border border-blue-200 shadow-sm"
+                        : "text-gray-700 border hover:bg-gray-300 border-transparent"
+                }
+            `}
         >
-            <h3 className="font-semibold">{company.name}</h3>
+            {isSelected && (
+                <div className="absolute left-0 top-2 bottom-2 w-1 rounded-r-full bg-blue-600" />
+            )}
+
+            <span className="font-medium">{company.name}</span>
         </button>
     );
 };

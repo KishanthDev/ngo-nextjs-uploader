@@ -5,6 +5,7 @@ import UploadModal from "./UploadModal";
 import ReplaceModal from "./ReplaceModal";
 import DeleteDialog from "./DeleteDialog";
 import PreviewImageModal from "./PreviewImageModal";
+import MediaGridLoader from "./MediaGridLoader";
 
 interface ImageGridProps {
     companyId: string;
@@ -68,7 +69,7 @@ const ImageGrid: React.FC<ImageGridProps> = ({
     const isSingleImageSection = sectionConfig.maxImages === 1;
 
     if (loading) {
-        return <div className="text-center py-10">Loading Images...</div>;
+        return <MediaGridLoader count={sectionConfig.maxImages || 12} />;
     }
 
     return (
